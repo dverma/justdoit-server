@@ -40,7 +40,7 @@ public class Task {
 	@JsonIgnore
 	private Task masterTask;
 
-	@OneToMany (mappedBy = "masterTask")
+	@OneToMany (mappedBy = "masterTask", cascade = CascadeType.ALL, orphanRemoval=true)
 	private List<Task> subtasks = new ArrayList<>();
 
 
