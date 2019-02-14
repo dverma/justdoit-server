@@ -16,12 +16,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * @author Dhawal Verma
  */
 @Entity
 @Table (name = "TASKS")
+@JsonIgnoreProperties ({"hibernateLazyInitializer", "handler"})
 public class Task {
 
 	@Id
@@ -35,17 +37,17 @@ public class Task {
 	private Integer progress;
 	private Boolean isCompleted;
 
-	@ManyToOne (cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn (name = "MASTER_TASK_ID")
 	@JsonIgnore
 	private Task masterTask;
 
-	@OneToMany (mappedBy = "masterTask", cascade = CascadeType.ALL, orphanRemoval=true)
+	@OneToMany (mappedBy = "masterTask", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Task> subtasks = new ArrayList<>();
 
 
 	public Task() {
-
+		// Empty constructor
 	}
 
 
